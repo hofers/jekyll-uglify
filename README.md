@@ -1,4 +1,5 @@
 # [jekyll-uglify](https://rubygems.org/gems/jekyll-uglify)
+[![Gem Version](https://badge.fury.io/rb/jekyll-uglify.svg)](https://badge.fury.io/rb/jekyll-uglify)
 
 A Jekyll plugin for uglifying JS in a given directory using [Uglifier](https://github.com/lautis/uglifier), a Ruby wrapper for UglifyJS. 
 
