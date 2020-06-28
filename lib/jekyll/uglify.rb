@@ -7,19 +7,19 @@ require 'uglifier'
 module Jekyll
   module Uglify
     class Error < StandardError; end
-    # Uglify all JS files in a given directory. 
+    # Uglify given JS files or directories.
     # Ignores files with `.min.js` extensions.
     # Gets Uglifier configuration settings from `_config.yml`
     # 
-    # Syntax: jekyll uglify DIRECTORY  [or]
-    #         bundle exec jekyll uglify DIR
+    # Syntax: jekyll uglify FILEPATH [ADDITIONAL_FILEPATHS]  [or]
+    #         bundle exec jekyll uglify FILEPATH [ADDITIONAL_FILEPATHS]
     # Arguments:
-    #         DIR directory in which JS should be uglified
+    #         FILEPATH  path to file or directory to be uglified
     class UglifyJS < Jekyll::Command
       def self.init_with_program(prog)
         prog.command(:uglify) do |c|
-          c.syntax "uglify DIRECTORY"
-          c.description 'Uglifies JS files in a given directory. Ignores minified files.'
+          c.syntax "uglify FILEPATH [ADDITIONAL_FILEPATHS]"
+          c.description 'Uglifies given JS files or directories. Ignores minified files.'
 
           c.action do |args, options|
             config_raw = Jekyll.configuration()["jekyll-uglify"]
@@ -35,11 +35,21 @@ module Jekyll
                 config[k.to_sym] = v
               end
             end
-            Dir.foreach(Dir.pwd + args[0]) do |file|
-              next if file == '.' or file == '..' or file.include? '.min.js'
-              filepath = Dir.pwd + args[0] + file
-              output = Uglifier.compile(File.open(filepath, 'r'), config)
-              File.open(filepath, 'w').write(output)
+            args.each do |dir|
+              if !(dir.start_with? "/") then dir = "/" + dir end
+              if ((dir.end_with? ".js") && !(dir.end_with? ".min.js"))
+                filepath = Dir.pwd + dir
+                output = Uglifier.compile(File.open(filepath, 'r'), config)
+                File.open(filepath, 'w').write(output)
+                next
+              end
+              if !(dir.end_with? "/") then dir = dir + "/" end
+              Dir.foreach(Dir.pwd + dir) do |file|
+                next if file == '.' or file == '..' or file.include? '.min.js'
+                filepath = Dir.pwd + dir + file
+                output = Uglifier.compile(File.open(filepath, 'r'), config)
+                File.open(filepath, 'w').write(output)
+              end
             end
           end
         end

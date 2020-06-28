@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jekyll-uglify (1.0.0)
+    jekyll-uglify (1.0.2)
       uglifier (~> 4.2.0)
 
 GEM
