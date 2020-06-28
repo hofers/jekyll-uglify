@@ -11,7 +11,11 @@ gem install jekyll-uglify
 ## Set Up
 In `Gemfile`
 ``` ruby
-gem 'jekyll-uglify'
+...
+group :jekyll_plugins do
+  ...
+  gem 'jekyll-uglify'
+end
 ```
 
 To enable options in `_config.yml`
