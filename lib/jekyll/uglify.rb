@@ -7,14 +7,15 @@ require 'uglifier'
 module Jekyll
   module Uglify
     class Error < StandardError; end
-      class UglifyJS < Jekyll::Command
-      # Uglify all JS files in a given directory. 
-      # Ignores files with `.min.js` extensions.
-      # Gets Uglifier configuration settings from `_config.yml`
-      # 
-      # Syntax: jekyll uglify DIRECTORY  [or]
-      #         bundle exec jekyll uglify DIR
-      #
+    # Uglify all JS files in a given directory. 
+    # Ignores files with `.min.js` extensions.
+    # Gets Uglifier configuration settings from `_config.yml`
+    # 
+    # Syntax: jekyll uglify DIRECTORY  [or]
+    #         bundle exec jekyll uglify DIR
+    # Arguments:
+    #         DIR directory in which JS should be uglified
+    class UglifyJS < Jekyll::Command
       def self.init_with_program(prog)
         prog.command(:uglify) do |c|
           c.syntax "uglify DIRECTORY"
