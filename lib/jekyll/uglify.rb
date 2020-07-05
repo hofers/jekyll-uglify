@@ -45,8 +45,8 @@ module Jekyll
               end
               if !(dir.end_with? "/") then dir = dir + "/" end
               Dir.foreach(Dir.pwd + dir) do |file|
-                next if file == '.' or file == '..' or file.include? '.min.js'
-                next unless file.include? '.js'
+                next if file == '.' or file == '..' or file.end_with? '.min.js'
+                next unless file.end_with? '.js'
                 filepath = Dir.pwd + dir + file
                 output = Uglifier.compile(File.open(filepath, 'r'), config)
                 File.open(filepath, 'w').write(output)
