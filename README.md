@@ -110,6 +110,8 @@ jekyll-uglify:
 
 ## Usage
 ```
+jekyll uglify FILEPATH [ADDITIONAL_FILEPATHS]
+ OR
 bundle exec jekyll uglify FILEPATH [ADDITIONAL_FILEPATHS]
 ```
 You can list any number of files or directories to be uglified. Include this command in your build process to uglify JS at build time.
